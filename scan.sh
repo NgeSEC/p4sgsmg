@@ -12,8 +12,8 @@ path=$1
 # Read the file list.txt and store each line into the array search_strings
 readarray -t search_strings < list.txt
 
-# Declare an empty array to store the grep results
-declare -a grep_results
+# Create an empty array to store the grep results
+grep_results=()
 
 # Loop through each search string in the array
 for string in "${search_strings[@]}"; do
