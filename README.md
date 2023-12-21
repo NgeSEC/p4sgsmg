@@ -31,11 +31,23 @@ path=$1
 # Read the file list.txt and store each line into the array search_strings
 readarray -t search_strings < list.txt
 
-# Declare an empty array to store the grep results
-declare -a grep_results
+# Get the total number of search strings
+total=${#search_strings[@]}
+
+# Create an empty array to store the grep results
+grep_results=()
+
+# Initialize a counter
+counter=0
 
 # Loop through each search string in the array
 for string in "${search_strings[@]}"; do
+  # Increment the counter
+  ((counter++))
+
+  # Print the current position and total
+  echo "Scanning string $counter of $total: $string"
+
   # Run the grep command with the current search string and store the results in the array grep_results
   while IFS= read -r line; do
     grep_results+=("$line")
@@ -47,6 +59,7 @@ readarray -t unique_grep_results < <(printf '%s\n' "${grep_results[@]}" | sort -
 
 # Display the unique results
 printf '%s\n' "${unique_grep_results[@]}"
+
 ```
 
 ## Input File
