@@ -37,11 +37,17 @@ for string in "${search_strings[@]}"; do
   done < <(grep -Rlw "$path" -e "$string")
 done
 
+echo "==================================================================================================="
+echo "suspect file list:"
+
 # Remove duplicates from the array grep_results
 readarray -t unique_grep_results < <(printf '%s\n' "${grep_results[@]}" | sort -u)
 
 # Display the unique results
 printf '%s\n' "${unique_grep_results[@]}"
+
+echo "==================================================================================================="
+echo "backdoor suspect list:"
 
 # Check if unique_grep_results is not empty
 if [ ${#unique_grep_results[@]} -ne 0 ]; then
@@ -58,3 +64,8 @@ if [ ${#unique_grep_results[@]} -ne 0 ]; then
     fi
   done
 fi
+
+echo "==================================================================================================="
+echo "writeable file or folder list:"
+
+find $path -type d,f -perm /u=w,g=w,o=w
