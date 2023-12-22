@@ -1,13 +1,28 @@
 #!/bin/bash
 
 # Check if an argument was provided
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 path"
-    exit 1
-fi
+exclude_paths=()
 
-# Store the argument into a variable
-path=$1
+while (( "$#" )); do
+  case "$1" in
+    -p|--path)
+      path="$2"
+      shift 2
+      ;;
+    -e|--exclude-path)
+      exclude_paths+=("$2")
+      shift 2
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
 
 # Read the file list.txt and store each line into the array search_strings
 readarray -t search_strings < list.txt
@@ -65,12 +80,24 @@ if [ ${#unique_grep_results[@]} -ne 0 ]; then
   done
 fi
 
+while IFS= read -r line
+do
+  # Adds each path to the exclude variable
+  exclude_paths="$exclude_paths -not -path '$line/*'"
+done < exclude_paths.txt
+
+while IFS= read -r line
+do
+  # Adds each path to the exclude variable
+  exclude_files="$exclude_files -not -name '$line/*'"
+done < exclude_files.txt
+
 echo "==================================================================================================="
 echo "writeable folder list:"
 
-find $path -type d -perm /u=w,g=w,o=w
+find $path -type d -perm /u=w,g=w,o=w $exclude_paths
 
 echo "==================================================================================================="
 echo "writeable file list:"
 
-find $path -type f -perm /u=w,g=w,o=w
+find $path -type f -perm /u=w,g=w,o=w $exclude_paths $exclude_files

@@ -4,10 +4,13 @@ This bash script reads a list of search strings from a file, searches for these 
 
 ## Usage
 
-To use this script, you need to call it with the path to the directory you want to search as an argument. For example:
+To use this tools, 
+1. Clone this project or download our last relase
+2. call scan.sh with the path option (-p) to the directory you want to search as an argument. 
+For example:
 
 ```bash
-bash scan.sh /var/www/html
+bash scan.sh -p /var/www/html
 ```
 
 In this example, the script will search for the strings in the `/var/www/html` directory and its subdirectories.
