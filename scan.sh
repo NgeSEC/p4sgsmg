@@ -26,8 +26,10 @@ for string in "${search_strings[@]}"; do
   # Increment the counter
   ((counter++))
 
+  string=$(echo "$string" | tr -d '\n')
+
   # Print the current position and total
-  echo "Scanning string $counter of $total"
+  echo "Scanning string $counter of $total: scan keyword $string"
 
   # Run the grep command with the current search string and store the results in the array grep_results
   while IFS= read -r line; do
