@@ -27,7 +27,7 @@ for string in "${search_strings[@]}"; do
   ((counter++))
 
   # Print the current position and total
-  echo "Scanning string $counter of $total: $string"
+  echo "Scanning string $counter of $total"
 
   # Run the grep command with the current search string and store the results in the array grep_results
   while IFS= read -r line; do
@@ -40,3 +40,19 @@ readarray -t unique_grep_results < <(printf '%s\n' "${grep_results[@]}" | sort -
 
 # Display the unique results
 printf '%s\n' "${unique_grep_results[@]}"
+
+# Check if unique_grep_results is not empty
+if [ ${#unique_grep_results[@]} -ne 0 ]; then
+  # Loop through each file in unique_grep_results
+  for file in "${unique_grep_results[@]}"; do
+    # Calculate the md5sum of the file
+    md5=$(md5sum "$file" | awk '{ print $1 }')
+
+    # Check if the md5sum is in sum5list.txt
+    if grep -q "$md5" sum5list.txt; then
+      echo "The file $file is backdoor."
+    else
+      echo "The file $file is not backdoor, please inform this script author for next investigation."
+    fi
+  done
+fi
