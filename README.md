@@ -5,8 +5,8 @@ This bash script reads a list of search strings from a file, searches for these 
 ## Usage
 
 To use this tools, 
-1. Clone this project or download our last relase
-2. call scan.sh with the path option (-p) to the directory you want to search as an argument. 
+1. Clone this project or download our last release
+2. Call scan.sh with the path option (-p) to the directory you want to search as an argument. 
 For example:
 
 ```bash
