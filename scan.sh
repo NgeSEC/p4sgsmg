@@ -83,21 +83,21 @@ fi
 while IFS= read -r line
 do
   # Adds each path to the exclude variable
-  exclude_paths="$exclude_paths -not -path '$line/*'"
+  exclude_paths="$exclude_paths -not -path '$line'"
 done < exclude_paths.txt
 
 while IFS= read -r line
 do
   # Adds each path to the exclude variable
-  exclude_files="$exclude_files -not -name '$line/*'"
+  exclude_files="$exclude_files -not -name '$line'"
 done < exclude_files.txt
 
 echo "==================================================================================================="
 echo "writeable folder list:"
 
-find $path -type d -perm /u=w,g=w,o=w $exclude_paths
+eval "find $path -type d -perm /u=w,g=w,o=w $exclude_paths"
 
 echo "==================================================================================================="
 echo "writeable file list:"
 
-find $path -type f -perm /u=w,g=w,o=w $exclude_paths $exclude_files
+eval "find $path -type f -perm /u=w,g=w,o=w $exclude_paths $exclude_files"

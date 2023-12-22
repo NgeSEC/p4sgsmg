@@ -1,4 +1,8 @@
-./cache/*
-./upload/*
+*/cache/*
+*/cache
+*/upload/*
+*/upload
 *.hg/*
+*.hg
 *.git/*
+*.git
