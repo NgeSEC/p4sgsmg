@@ -66,6 +66,11 @@ if [ ${#unique_grep_results[@]} -ne 0 ]; then
 fi
 
 echo "==================================================================================================="
-echo "writeable file or folder list:"
+echo "writeable folder list:"
 
-find $path -type d,f -perm /u=w,g=w,o=w
+find $path -type d -perm /u=w,g=w,o=w
+
+echo "==================================================================================================="
+echo "writeable file list:"
+
+find $path -type f -perm /u=w,g=w,o=w
